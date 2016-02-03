@@ -51,9 +51,9 @@ object IMP {
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
     import sqlContext.implicits._
 
-    val rawDataPath = args(0)
-    val queryFilePath = args(1)
     try {
+      val rawDataPath = args(0)
+      val queryFilePath = args(1)
       Utilities.logMsgWithTime("Programe execution started")
 
       val datasetRDD = sc.textFile(rawDataPath)
@@ -64,8 +64,7 @@ object IMP {
         .registerTempTable("RawDataLake")
       Utilities.logMsgWithTime("Finished Register Table")
 
-     
-      queryRDD.toArray().foreach{
+      queryRDD.toArray().foreach {
         query =>
           Utilities.logMsgWithTime("Executing Query Start :: ")
           Utilities.logMsgWithTime("query :: " + query)
@@ -75,7 +74,7 @@ object IMP {
 
       Utilities.logMsgWithTime("Programe execution end")
     } catch {
-      case ex: Exception => println("<<<<<<<<<<<<<<<<<<<<<<<-------- EXCEPTION ---------->>>>>>>>>>>>>>>>>>>"); println(ex.printStackTrace())
+      case ex: Exception => println("<<<<<<<<<<<<<<<<<<<<<<<-------- EXCEPTION ---------->>>>>>>>>>>>>>>>>>>"); println(ex.getMessage())
     }
 
     sc.stop()
